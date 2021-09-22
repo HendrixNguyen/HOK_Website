@@ -1,12 +1,12 @@
-require("dotenv").config()
-import express from "express"
-import "body-parser"
+require('dotenv').config()
+import express from 'express'
+import 'body-parser'
 
-const app = express()
+const app = require('express')
 
-const bodyParser = require("body-parser")
+const bodyParser = require('body-parser')
 
-const cors = require("cors")
+const cors = require('cors')
 
 app.use(cors(corsOptions))
 
@@ -17,8 +17,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // simple route
-app.get("/", (_req, res) => {
-  res.json({ message: "Welcome to Dating application." })
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.json({ message: 'Welcome to Dating application.' })
 })
 
 /* 
@@ -33,6 +33,5 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`)
 })
 function corsOptions(corsOptions: any): any {
-    throw new Error("Function not implemented.")
+  throw new Error('Function not implemented.')
 }
-
