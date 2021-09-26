@@ -1,24 +1,32 @@
 require('dotenv').config()
-import express from 'express'
+import express, { Request, Response } from 'express'
 import 'body-parser'
+import morgan from 'morgan'
 
-const app = require('express')
+const app = express()
+const cors = require('cors')
+
+//CORS_OPTIONS
+let corsOptions = {
+  origin: 'https://localhost:8080/',
+}
 
 const bodyParser = require('body-parser')
-
-const cors = require('cors')
 
 app.use(cors(corsOptions))
 
 // parse requests of content-type - application/json
-app.use(express.json())
+app.use(bodyParser.json())
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
+
+//use morgan to console.log http request
+app.use(morgan('dev'),
 
 // simple route
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.json({ message: 'Welcome to Dating application.' })
+app.get('/', async (req: Request, res: Response): Promise<Response> => {
+  return await res.status(200).send('Home')
 })
 
 /* 
@@ -29,9 +37,10 @@ app.get("/", (req, res) => {
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`)
-})
-function corsOptions(corsOptions: any): any {
-  throw new Error('Function not implemented.')
+try {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+  })
+} catch (error) {
+  console.log(`Error occurred: ${error.message}`)
 }
