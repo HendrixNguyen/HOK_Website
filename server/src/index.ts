@@ -1,46 +1,33 @@
-require('dotenv').config()
-import express, { Request, Response } from 'express'
-import 'body-parser'
-import morgan from 'morgan'
+import express, { Application, Request, Response } from 'express'
+import { UserController } from './controller/index'
 
-const app = express()
-const cors = require('cors')
+export class Server {
+  private app: Application
+  protected UserController: UserController
 
-//CORS_OPTIONS
-let corsOptions = {
-  origin: 'https://localhost:8080/',
+  constructor() {
+    //create App with express server
+    this.app = express()
+    this.configuration()
+    this.routes()
+  }
+
+  public routes() {
+    this.app.get('/auth/', this.UserController.router)
+    this.app.get('/', async (req: Request, res: Response) => {
+      await res.status(200).json({ message: 'This is default home' })
+    })
+  }
+  public configuration(): void {
+    this.app.set('port', process.env.PORT || 3000)
+  }
+
+  public start() {
+    this.app.listen(this.app.get('port'), () => {
+      console.log(`This server has been started on ${this.app.get('port')})}`)
+    })
+  }
 }
 
-const bodyParser = require('body-parser')
-
-app.use(cors(corsOptions))
-
-// parse requests of content-type - application/json
-app.use(bodyParser.json())
-
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
-
-//use morgan to console.log http request
-app.use(morgan('dev'),
-
-// simple route
-app.get('/', async (req: Request, res: Response): Promise<Response> => {
-  return await res.status(200).send('Home')
-})
-
-/* 
-app.get("/", (req, res) => {
-    res.render({ "../../client/src/main.jsx"})
-})
-*/
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080
-try {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
-  })
-} catch (error) {
-  console.log(`Error occurred: ${error.message}`)
-}
+const server = new Server()
+server.start()
