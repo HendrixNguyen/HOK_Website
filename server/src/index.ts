@@ -1,37 +1,52 @@
-require('dotenv').config()
-import express from 'express'
-import 'body-parser'
+import express, { Application, Request, Response } from 'express'
+import morgan from 'morgan'
+import dbConnection from './config/dbconfig'
+import { UserController } from './controller/users.controller'
 
-const app = require('express')
+export class Server {
+  private app: Application
+  protected UserController: UserController
 
-const bodyParser = require('body-parser')
+  constructor() {
+    //create App with express server
+    this.app = express()
+    this.configuration()
+  }
 
-const cors = require('cors')
+  public async routes() {
+    this.UserController = new UserController()
 
-app.use(cors(corsOptions))
+    this.app.get('/auth/', this.UserController.router)
+    this.app.get('/', async (_req: Request, res: Response) => {
+      await res.status(200).json({ message: 'This is default home' })
+    })
+  }
 
-// parse requests of content-type - application/json
-app.use(express.json())
+  public configuration(): void {
+    this.app.set('port', process.env.PORT || 3000)
+    this.app.use(express.json())
+    this.app.use(morgan('dev'))
+  }
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
+  public async start() {
+    if (!process.env.IS_TESTING) {
+      await dbConnection()
+    }
 
-// simple route
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.json({ message: 'Welcome to Dating application.' })
-})
+    await this.routes()
 
-/* 
-app.get("/", (req, res) => {
-    res.render({ "../../client/src/main.jsx"})
-})
-*/
+    await new Promise<void>(done => {
+      const server = this.app.listen(this.app.get('port'), () => {
+        console.log(`This server has been started on ${this.app.get('port')}`)
+        done()
+      })
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`)
-})
-function corsOptions(corsOptions: any): any {
-  throw new Error('Function not implemented.')
+      if (process.env.IS_TESTING) {
+        server.close()
+      }
+    });
+  }
 }
+
+const server = new Server()
+server.start()

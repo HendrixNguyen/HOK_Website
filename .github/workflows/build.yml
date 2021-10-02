@@ -40,3 +40,7 @@ jobs:
           pull: true
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Verify image
+        run: |
+          docker run --rm -it -e IS_TESTING=true ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
