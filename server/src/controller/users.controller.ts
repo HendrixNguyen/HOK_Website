@@ -1,7 +1,5 @@
 import { User } from '../entities/User'
 import { NextFunction, Request, Response, Router } from 'express'
-import { getConnection } from 'typeorm'
-import dbConnection from 'src/config/dbconfig'
 
 export class UserController {
   public router: Router

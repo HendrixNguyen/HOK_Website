@@ -11,11 +11,9 @@ export class Server {
     //create App with express server
     this.app = express()
     this.configuration()
-    this.routes()
   }
 
   public async routes() {
-    dbConnection()
     this.UserController = new UserController()
 
     this.app.get('/auth/', this.UserController.router)
@@ -30,10 +28,23 @@ export class Server {
     this.app.use(morgan('dev'))
   }
 
-  public start() {
-    this.app.listen(this.app.get('port'), () => {
-      console.log(`This server has been started on ${this.app.get('port')}`)
-    })
+  public async start() {
+    if (!process.env.IS_TESTING) {
+      await dbConnection()
+    }
+
+    await this.routes()
+
+    await new Promise<void>(done => {
+      const server = this.app.listen(this.app.get('port'), () => {
+        console.log(`This server has been started on ${this.app.get('port')}`)
+        done()
+      })
+
+      if (process.env.IS_TESTING) {
+        server.close()
+      }
+    });
   }
 }
 
