@@ -43,4 +43,4 @@ jobs:
 
       - name: Verify image
         run: |
-          docker run --rm -it -e IS_TESTING=true ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker run --rm -e IS_TESTING=true ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
