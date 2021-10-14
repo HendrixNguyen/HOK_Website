@@ -35,7 +35,7 @@ export class Server {
 
     await this.routes()
 
-    await new Promise<void>(done => {
+    await new Promise<void>((done) => {
       const server = this.app.listen(this.app.get('port'), () => {
         console.log(`This server has been started on ${this.app.get('port')}`)
         done()
@@ -44,7 +44,7 @@ export class Server {
       if (process.env.IS_TESTING) {
         server.close()
       }
-    });
+    })
   }
 }
 

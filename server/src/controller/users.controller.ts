@@ -32,7 +32,7 @@ export class UserController {
         const result = await User.save(newUser)
         return res.json(result)
       }
-      return res.status(200).send('Succeed')
+      return res.status(200).send('succeed')
     } catch (err) {
       return res.status(400).send('Error creating User')
     }
