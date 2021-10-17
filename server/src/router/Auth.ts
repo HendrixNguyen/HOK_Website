@@ -1,15 +1,19 @@
-import express from 'express'
+import { UserController } from '../controller/users.controller'
+import { Router } from 'express'
 
-import { getUser } from '../controller/index'
-
-const route = express.Router()
-
-route.get('/', async (req: express.Request, res: express.Response) => {
-  try {
-    await res.status(202).send('Succeed')
-  } catch (e) {
-    console.log(e)
+export class UserRouter {
+  public route: Router
+  protected UserController: UserController
+  // private login: UserController.findUser
+  constructor() {
+    this.route = Router()
+    this.routes()
   }
-})
 
-route.post('/login', getUser)
+  public routes() {
+    this.route.get('/', () => this.UserController.getAllUser)
+    this.route.post('/signup', () => this.UserController.createUser)
+    this.route.post('/login', () => this.UserController.findUser)
+    // this.route.put('/:id', this.updateUser)
+  }
+}

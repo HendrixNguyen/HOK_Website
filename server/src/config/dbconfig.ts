@@ -6,9 +6,9 @@ dotenv.config()
 const dbConnection = async () => {
   try {
     const conn = await createConnection({
-      type: 'postgres',
+      type: 'mysql', //mysql
       host: 'localhost',
-      port: 3306,
+      port: 3306, //3306
       username: process.env.DB_USERNAME_DEV,
       password: process.env.DB_PASSWORD_DEV,
       database: process.env.DB_DATABASE_DEV,

@@ -1,12 +1,17 @@
-import { User } from '../entities/User'
-import { NextFunction, Request, Response, Router } from 'express'
+import {User} from '../entities/User'
+import {Request, Response} from 'express'
 
 export class UserController {
-  public router: Router
+  // static getAllUser: this.getAllUser()
+  // public router: Router
 
   constructor() {
-    this.router = Router()
-    this.routes()
+    // this.router = Router()
+    // this.routes()
+    this.getAllUser
+    this.findUser
+    this.createUser
+    this.updateUser
   }
 
   public getAllUser = async (
@@ -15,9 +20,9 @@ export class UserController {
   ): Promise<Response> => {
     try {
       const users = await User.find()
-      return res.status(201).json({ users })
+      return res.status(201).json({users})
     } catch (err) {
-      return await res.status(404).send(err)
+      return res.status(404).send(err);
     }
   }
 
@@ -28,7 +33,7 @@ export class UserController {
     try {
       const newUser = req.body()
       // const { } = req.body();
-      if (newUser.username === User.findOne('username')) {
+      if (newUser.username === await User.findOne('username')) {
         const result = await User.save(newUser)
         return res.json(result)
       }
@@ -42,7 +47,6 @@ export class UserController {
   public findUser = async (
     _req: Request,
     res: Response,
-    _next: NextFunction
   ) => {
     try {
       res.status(201).send('succeed')
@@ -54,8 +58,7 @@ export class UserController {
   //update user
   public updateUser = async (
     _req: Request,
-    res: Response,
-    _next: NextFunction
+    res: Response
   ) => {
     try {
       res.status(201).send('succeed')
@@ -64,11 +67,4 @@ export class UserController {
     }
   }
   //delete user
-
-  public routes() {
-    this.router.get('/', this.getAllUser)
-    this.router.post('/signup', this.createUser)
-    this.router.post('/login', this.findUser)
-    this.router.put('/:id', this.updateUser)
-  }
 }
