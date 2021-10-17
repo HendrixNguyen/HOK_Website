@@ -1,7 +1,5 @@
 import { createConnection } from 'typeorm'
-import dotenv from 'dotenv'
-
-dotenv.config()
+import { dirname, join } from 'path'
 
 const dbConnection = async () => {
   try {
@@ -14,13 +12,15 @@ const dbConnection = async () => {
       database: process.env.DB_DATABASE,
       synchronize: true,
       logging: true,
-      entities: ['src/entity/*.ts'],
-      migrations: ['src/migrations/**/*.ts'],
+      entities: [join(dirname(dirname(__filename)), 'entities', '*.ts')],
+      migrations: [join(dirname(dirname(__filename)), 'migrations', '*.ts')],
     }).catch((e) => {
       console.error('ERROR: Không thể kết nối tới Database !')
       console.error(e)
       process.exit(1)
     })
+
+    await conn.runMigrations()
 
     console.log(`DB is connected to ${conn.isConnected}`)
   } catch (err) {

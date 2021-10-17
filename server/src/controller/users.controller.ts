@@ -2,13 +2,6 @@ import { User } from '../entities/User'
 import { NextFunction, Request, Response, Router } from 'express'
 
 export class UserController {
-  public router: Router
-
-  constructor() {
-    this.router = Router()
-    this.routes()
-  }
-
   public getAllUser = async (
     _req: Request,
     res: Response
@@ -65,10 +58,15 @@ export class UserController {
   }
   //delete user
 
-  public routes() {
-    this.router.get('/', this.getAllUser)
-    this.router.post('/signup', this.createUser)
-    this.router.post('/login', this.findUser)
-    this.router.put('/:id', this.updateUser)
+  public static buildRouter(): Router {
+    const router = Router()
+    const self = new this()
+
+    router.get('/', self.getAllUser)
+    router.post('/signup', self.createUser)
+    router.post('/login', self.findUser)
+    router.put('/:id', self.updateUser)
+
+    return router
   }
 }

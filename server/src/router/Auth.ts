@@ -1,15 +1,7 @@
 import express from 'express'
 
-import { getUser } from '../controller/index'
+import { UserController } from '../controller'
 
-const route = express.Router()
+export const authRouter = express.Router()
 
-route.get('/', async (req: express.Request, res: express.Response) => {
-  try {
-    await res.status(202).send('Succeed')
-  } catch (e) {
-    console.log(e)
-  }
-})
-
-route.post('/login', getUser)
+authRouter.use('/', UserController.buildRouter())
