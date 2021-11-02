@@ -3,6 +3,7 @@ import {Request, Response} from 'express'
 
 export class UserController {
 <<<<<<< HEAD
+<<<<<<< HEAD
   // static getAllUser: this.getAllUser()
   // public router: Router
 
@@ -15,6 +16,8 @@ export class UserController {
     this.updateUser
   }
 
+=======
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
 =======
 >>>>>>> d2f361a (Feature/direct route to routefolder (#7))
   public getAllUser = async (
@@ -82,6 +85,18 @@ export class UserController {
     router.post('/login', self.findUser)
     router.put('/:id', self.updateUser)
 
+<<<<<<< HEAD
+=======
+  public static buildRouter(): Router {
+    const router = Router()
+    const self = new this()
+
+    router.get('/', self.getAllUser)
+    router.post('/signup', self.createUser)
+    router.post('/login', self.findUser)
+    router.put('/:id', self.updateUser)
+
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
     return router
   }
 >>>>>>> d2f361a (Feature/direct route to routefolder (#7))

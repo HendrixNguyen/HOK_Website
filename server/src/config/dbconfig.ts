@@ -5,6 +5,7 @@ const dbConnection = async () => {
   try {
     const conn = await createConnection({
 <<<<<<< HEAD
+<<<<<<< HEAD
       type: 'mysql', //mysql
       host: 'localhost',
       port: 3306, //3306
@@ -12,12 +13,17 @@ const dbConnection = async () => {
       password: process.env.DB_PASSWORD_DEV,
       database: process.env.DB_DATABASE_DEV,
 =======
+=======
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
       type: 'mysql',
       host: process.env.DB_HOST,
       port: +(process.env.DB_PORT || 3306),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
+<<<<<<< HEAD
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
+=======
 >>>>>>> d2f361a (Feature/direct route to routefolder (#7))
       synchronize: true,
       logging: true,

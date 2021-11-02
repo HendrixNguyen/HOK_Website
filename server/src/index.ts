@@ -16,12 +16,16 @@ export class Server {
 
   public async routes() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.UserRouter = new UserRouter()
 
     this.app.use('/auth/', this.UserRouter.route)
     this.app.get('/', async (_req: Request, res: Response) => {
       await res.status(200).json({ message: 'This is default home' })
     })
+=======
+    this.app.use(router)
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
 =======
     this.app.use(router)
 >>>>>>> d2f361a (Feature/direct route to routefolder (#7))
