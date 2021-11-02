@@ -2,6 +2,7 @@ import {User} from '../entities/User'
 import {Request, Response} from 'express'
 
 export class UserController {
+<<<<<<< HEAD
   // static getAllUser: this.getAllUser()
   // public router: Router
 
@@ -14,6 +15,8 @@ export class UserController {
     this.updateUser
   }
 
+=======
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
   public getAllUser = async (
     _req: Request,
     res: Response
@@ -67,4 +70,19 @@ export class UserController {
     }
   }
   //delete user
+<<<<<<< HEAD
+=======
+
+  public static buildRouter(): Router {
+    const router = Router()
+    const self = new this()
+
+    router.get('/', self.getAllUser)
+    router.post('/signup', self.createUser)
+    router.post('/login', self.findUser)
+    router.put('/:id', self.updateUser)
+
+    return router
+  }
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
 }

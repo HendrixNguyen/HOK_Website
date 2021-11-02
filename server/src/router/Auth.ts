@@ -1,6 +1,7 @@
 import { UserController } from '../controller/users.controller'
 import { Router } from 'express'
 
+<<<<<<< HEAD
 export class UserRouter {
   public route: Router
   protected UserController: UserController
@@ -17,3 +18,10 @@ export class UserRouter {
     // this.route.put('/:id', this.updateUser)
   }
 }
+=======
+import { UserController } from '../controller'
+
+export const authRouter = express.Router()
+
+authRouter.use('/', UserController.buildRouter())
+>>>>>>> d2f361a (Feature/direct route to routefolder (#7))
