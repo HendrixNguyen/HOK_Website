@@ -1,4 +1,5 @@
-import express, { Application, Request, Response } from 'express'
+import { router } from './router/index'
+import express, { Application } from 'express'
 import morgan from 'morgan'
 import dbConnection from './config/dbconfig'
 import { UserController } from './controller/users.controller'
@@ -14,12 +15,7 @@ export class Server {
   }
 
   public async routes() {
-    this.UserController = new UserController()
-
-    this.app.get('/auth/', this.UserController.router)
-    this.app.get('/', async (_req: Request, res: Response) => {
-      await res.status(200).json({ message: 'This is default home' })
-    })
+    this.app.use(router)
   }
 
   public configuration(): void {
@@ -35,7 +31,7 @@ export class Server {
 
     await this.routes()
 
-    await new Promise<void>(done => {
+    await new Promise<void>((done) => {
       const server = this.app.listen(this.app.get('port'), () => {
         console.log(`This server has been started on ${this.app.get('port')}`)
         done()
@@ -44,7 +40,7 @@ export class Server {
       if (process.env.IS_TESTING) {
         server.close()
       }
-    });
+    })
   }
 }
 

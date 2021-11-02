@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  mysql:
+    build: infrastructure/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: hok
+      MYSQL_PASSWORD: hok123
+      MYSQL_DATABASE: hokdb
+    ports:
+      - 3306:3306
+    deploy:
+      replicas: 1
+  phpmyadmin:
+    build: infrastructure/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - 8306:80
+    deploy:
+      replicas: 1
+  server:
+    build: server
+    ports:
+      - 8888:8080
+    environment:
+      PORT: 8080
+      DB_HOST: mysql
+      DB_USERNAME: hok
+      DB_PASSWORD: hok123
+      DB_DATABASE: hokdb
+    deploy:
+      replicas: 1
+  client:
+    build: client
+    ports:
+      - 8080:80
+    deploy:
+      replicas: 1
