@@ -1,22 +1,22 @@
-import {Request, Response} from "express";
-import {User} from "../entities/User";
+import { Request, Response } from "express";
+import { User } from "../entities/User";
 import * as bcrypt from "bcrypt";
 
 export class Authorization {
-  protected register(req: Request, res: Response){
-    const {username, email, fullName, password, password2} = req.body;
+  protected register(req: Request, res: Response) {
+    const { username, email, fullName, password, password2 } = req.body;
     let errors: Array<any> = [];
 
     if (!username || !email || !fullName || !password || !password2) {
-      errors.push({msg: 'Please enter all fields'});
+      errors.push({ msg: 'Please enter all fields' });
     }
 
     if (password != password2) {
-      errors.push({msg: 'Passwords do not match'});
+      errors.push({ msg: 'Passwords do not match' });
     }
 
     if (password.length < 6) {
-      errors.push({msg: 'Password must be at least 6 characters'});
+      errors.push({ msg: 'Password must be at least 6 characters' });
     }
 
     if (errors.length > 0) {
@@ -29,9 +29,9 @@ export class Authorization {
         password2
       });
     } else {
-      User.findOne({email: email}).then(user => {
+      User.findOne({ email: email }).then(user => {
         if (user) {
-          errors.push({msg: 'Email already exists'});
+          errors.push({ msg: 'Email already exists' });
           res.render('register', {
             errors,
             username,
@@ -56,14 +56,15 @@ export class Authorization {
             });
           });
           * */
-          const newUser: Array<User> = [username ,password, fullName, email];
+          const newUser = new User();
+          Object.assign(newUser, { username, email, fullName });
 
           bcrypt.genSalt(10, (_err, salt) => {
-            bcrypt.hash(  ,salt, async (err, hash) => {
+            bcrypt.hash(password, salt, async (err, encryptedPassword) => {
               if (err) throw err;
-              newUser.indexOf(1) = Number(hash);
+              newUser.password = encryptedPassword;
               await User.save(newUser).then(() => {
-                req.flash({'success_msg': 'You are now registered and can log in'});
+                req.flash({ 'success_msg': 'You are now registered and can log in' });
                 res.redirect('/users/login');
               })
                 .catch(err => console.log(err));
