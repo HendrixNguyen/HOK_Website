@@ -1,25 +1,19 @@
 import {User} from '../entities/User'
-import {Request, Response} from 'express'
+import {Request, Response, Router} from 'express'
 
 export class UserController {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  // static getAllUser: this.getAllUser()
-  // public router: Router
 
-  constructor() {
-    // this.router = Router()
-    // this.routes()
-    this.getAllUser
-    this.findUser
-    this.createUser
-    this.updateUser
+  public static buildRouter(): Router {
+    const router = Router()
+    const self = new this();
+    router.get('/', self.getAllUser)
+    router.post('/', self.createUser)
+    router.get('/:id', self.findUser)
+    router.put('/:id', self.updateUser)
+    // router.delete('/:id', self.deleteUser)
+    return router
   }
 
-=======
->>>>>>> d2f361a (Feature/direct route to routefolder (#7))
-=======
->>>>>>> d2f361a (Feature/direct route to routefolder (#7))
   public getAllUser = async (
     _req: Request,
     res: Response
@@ -72,32 +66,5 @@ export class UserController {
       res.status(404).send(err)
     }
   }
-  //delete user
-<<<<<<< HEAD
-=======
 
-  public static buildRouter(): Router {
-    const router = Router()
-    const self = new this()
-
-    router.get('/', self.getAllUser)
-    router.post('/signup', self.createUser)
-    router.post('/login', self.findUser)
-    router.put('/:id', self.updateUser)
-
-<<<<<<< HEAD
-=======
-  public static buildRouter(): Router {
-    const router = Router()
-    const self = new this()
-
-    router.get('/', self.getAllUser)
-    router.post('/signup', self.createUser)
-    router.post('/login', self.findUser)
-    router.put('/:id', self.updateUser)
-
->>>>>>> d2f361a (Feature/direct route to routefolder (#7))
-    return router
-  }
->>>>>>> d2f361a (Feature/direct route to routefolder (#7))
 }
