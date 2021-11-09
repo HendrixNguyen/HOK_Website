@@ -1,8 +1,11 @@
+import { HobbyDetail } from './HobbyDetail';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -10,7 +13,7 @@ import {
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id: number
 
   @Column({ unique: true, nullable: false })
   username: string
@@ -24,9 +27,14 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string
 
+  @Column()
+  image:ImageData
+
   @CreateDateColumn()
   createAt: Date
 
   @UpdateDateColumn()
   updateAt: Date
+  @OneToMany(() => HobbyDetail, a => a.user)
+  usertoHobby: HobbyDetail[]
 }
