@@ -1,4 +1,4 @@
-import { router } from './router'
+import { router } from './router/index'
 import express, { Application } from 'express'
 import morgan from 'morgan'
 import dbConnection from './config/dbconfig'

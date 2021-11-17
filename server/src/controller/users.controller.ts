@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 export class UserController {
 
-
   public static buildRouter(): Router {
     const router = Router()
     const self = new this();
@@ -100,5 +99,4 @@ export class UserController {
       res.status(404).send(err)
     }
   }
-
 }
