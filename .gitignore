@@ -4,6 +4,7 @@ node_modules/
 
 # Environment
 .env
+
 # Misc
 .DS_Store
 
