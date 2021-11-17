@@ -1,7 +1,7 @@
-import express from 'express'
+import {UserController} from '../controller'
+import {Router} from "express";
 
-import { UserController } from '../controller'
-
-export const authRouter = express.Router()
+export const authRouter = Router()
 
 authRouter.use('/', UserController.buildRouter())
+
