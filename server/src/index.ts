@@ -1,4 +1,4 @@
-import { router } from './router/index'
+import { router } from './router'
 import express, { Application } from 'express'
 import morgan from 'morgan'
 import dbConnection from './config/dbconfig'
@@ -26,13 +26,12 @@ export class Server {
   }
 
   public async init() {
-    await dbConnection();
-    await MigrateManager.run();
+    await dbConnection()
+    await MigrateManager.run()
+    await this.routes()
   }
 
   public async start() {
-    await this.routes()
-
     await new Promise<void>((done) => {
       this.app.listen(this.app.get('port'), () => {
         console.log(`This server has been started on ${this.app.get('port')}`)

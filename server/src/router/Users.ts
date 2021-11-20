@@ -3,4 +3,4 @@ import { Router } from 'express'
 
 export const usersRouter = Router()
 
-usersRouter.use('/', UserController.buildRouter())
+usersRouter.use(UserController.buildRouter())

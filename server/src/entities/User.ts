@@ -37,4 +37,13 @@ export class User extends BaseEntity {
 
   @ManyToMany(() => Inbox, (inbox) => inbox.users)
   inboxes: Inbox[]
+
+  public checkPassword(password: string): boolean {
+    return this.password == password
+  }
+
+  public setPassword(password: string): this {
+    this.password = password
+    return this
+  }
 }
