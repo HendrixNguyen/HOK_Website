@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mysql:
-    build: infrastructure/mysql
+    image: ghcr.io/levinguyen11/hok_website/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: hok
@@ -13,7 +13,7 @@ services:
     deploy:
       replicas: 1
   phpmyadmin:
-    build: infrastructure/phpmyadmin
+    image: ghcr.io/levinguyen11/hok_website/phpmyadmin
     environment:
       PMA_HOST: mysql
       PMA_USER: root
@@ -22,8 +22,14 @@ services:
       - 8306:80
     deploy:
       replicas: 1
+  client:
+    image: ghcr.io/levinguyen11/hok_website/client
+    ports:
+      - 8080:80
+    deploy:
+      replicas: 1
   server:
-    build: server
+    image: ghcr.io/levinguyen11/hok_website/server
     ports:
       - 8888:8080
     environment:
@@ -32,11 +38,5 @@ services:
       DB_USERNAME: hok
       DB_PASSWORD: hok123
       DB_DATABASE: hokdb
-    deploy:
-      replicas: 1
-  client:
-    build: client
-    ports:
-      - 8080:80
     deploy:
       replicas: 1
