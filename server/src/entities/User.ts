@@ -17,23 +17,23 @@ export class User extends BaseEntity {
   @Column({ unique: true, nullable: false })
   username: string
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   password: string
 
-  @Column({ length: 50 })
+  @Column({ length: 150 })
   fullName: string
 
   @Column({ unique: true })
   email: string
+
+  @Column({ default: false })
+  isAdmin: boolean
 
   @CreateDateColumn()
   createAt: Date
 
   @UpdateDateColumn()
   updateAt: Date
-
-  @Column({ default: false })
-  isAdmin: boolean
 
   @ManyToMany(() => Inbox, (inbox) => inbox.users)
   inboxes: Inbox[]
