@@ -29,7 +29,7 @@ services:
     deploy:
       replicas: 1
   server:
-    image: ghcr.io/levinguyen11/hok_website/server
+    build: server
     ports:
       - 8888:8080
     environment:
