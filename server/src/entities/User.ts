@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import {
   BaseEntity,
   Column,
@@ -39,11 +40,11 @@ export class User extends BaseEntity {
   inboxes: Inbox[]
 
   public checkPassword(password: string): boolean {
-    return this.password == password
+    return this.password == createHash('sha1').update(password).digest('hex');
   }
 
   public setPassword(password: string): this {
-    this.password = password
+    this.password = createHash('sha1').update(password).digest('hex');
     return this
   }
 }
