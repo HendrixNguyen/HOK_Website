@@ -3,12 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import {Friend} from "./Friend";
-import { Message } from './Message';
+import { Inbox } from './Inbox';
 
 @Entity()
 export class User extends BaseEntity {
@@ -37,9 +36,6 @@ export class User extends BaseEntity {
   @Column({default: false})
   isAdmin: boolean;
 
-  @OneToMany(() => Friend, friend => friend.user)
-  friends: Friend[];
-
-  @OneToMany(() => Message, message => message.id)
-  messages: Message;
+  @ManyToMany(() => Inbox, inbox => inbox.users)
+  inboxes: Inbox[];
 }
