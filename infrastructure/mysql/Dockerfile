@@ -1,1 +1,1 @@
-FROM nobidev/pxc:57
+FROM mysql:5.7
