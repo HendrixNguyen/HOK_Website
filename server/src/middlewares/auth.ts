@@ -60,43 +60,48 @@
 //     }
 //   }
 // }
-import passport from "passport";
-import passportLocal from "passport-local";
-import {User} from "../entities/User";
-import bcrypt from "bcrypt";
+import passport from 'passport'
+import passportLocal from 'passport-local'
+import { User } from '../entities/User'
+import bcrypt from 'bcrypt'
 
-let LocalStrategy = passportLocal.Strategy;
+let LocalStrategy = passportLocal.Strategy
 
 export let initPassportLocal = () => {
-  passport.use(new LocalStrategy({
-    usernameField: "email",
-    passwordField: "password",
-    passReqToCallback: true
-  }, async (_req, email, password, done)=> {
-    try {
-      let user = await User.findOne(email);
-      if (!user) {
-        return done(null, false);
+  passport.use(
+    new LocalStrategy(
+      {
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true,
+      },
+      async (_req, email, password, done) => {
+        try {
+          let user = await User.findOne(email)
+          if (!user) {
+            return done(null, false)
+          }
+
+          let checkPassword = await bcrypt.compare(password, user.password)
+
+          if (!checkPassword) {
+            return done(null, false)
+          }
+
+          return done(null, user)
+        } catch (error) {
+          console.log(error)
+          return done(null, false)
+        }
       }
+    )
+  )
+}
 
-      let checkPassword = await(bcrypt.compare(password, user.password));
+passport.serializeUser(function (user, done) {
+  done(null, user)
+})
 
-      if (!checkPassword) {
-        return done(null, false);
-      }
-
-      return done(null, user);
-    } catch (error) {
-      console.log(error);
-      return done(null, false,);
-    }
-  }));
-};
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user: User, done) {
-  return done(null, user);
-});
+passport.deserializeUser(function (user: User, done) {
+  return done(null, user)
+})

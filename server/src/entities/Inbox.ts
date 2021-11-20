@@ -1,11 +1,11 @@
-import {BaseEntity, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "./User";
+import { BaseEntity, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { User } from './User'
 
-@Entity()
-export class Inbox extends BaseEntity{
+@Entity('inboxes')
+export class Inbox extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
-  @OneToMany(() => User, user => user.id)
-  users: User[];
+  @OneToMany(() => User, (user) => user.id)
+  users: User[]
 }

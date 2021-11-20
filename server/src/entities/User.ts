@@ -7,35 +7,34 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Inbox } from './Inbox';
+import { Inbox } from './Inbox'
 
-@Entity()
+@Entity('users')
 export class User extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
-  @Column({unique: true, nullable: false})
-  username: string;
+  @Column({ unique: true, nullable: false })
+  username: string
 
-  @Column({unique: true, nullable: false})
-  password: string;
+  @Column({ unique: true, nullable: false })
+  password: string
 
-  @Column({length: 50})
-  fullName: string;
+  @Column({ length: 50 })
+  fullName: string
 
-  @Column({unique: true})
-  email: string;
+  @Column({ unique: true })
+  email: string
 
   @CreateDateColumn()
-  createAt: Date;
+  createAt: Date
 
   @UpdateDateColumn()
-  updateAt: Date;
+  updateAt: Date
 
-  @Column({default: false})
-  isAdmin: boolean;
+  @Column({ default: false })
+  isAdmin: boolean
 
-  @ManyToMany(() => Inbox, inbox => inbox.users)
-  inboxes: Inbox[];
+  @ManyToMany(() => Inbox, (inbox) => inbox.users)
+  inboxes: Inbox[]
 }

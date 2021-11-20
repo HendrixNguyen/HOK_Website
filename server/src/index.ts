@@ -2,7 +2,7 @@ import { router } from './router/index'
 import express, { Application } from 'express'
 import morgan from 'morgan'
 import dbConnection from './config/dbconfig'
-import passport from "passport";
+import passport from 'passport'
 
 export class Server {
   private app: Application
@@ -21,7 +21,7 @@ export class Server {
     this.app.set('port', process.env.PORT || 3000)
     this.app.use(express.json())
     this.app.use(morgan('dev'))
-    this.app.use(passport.initialize());
+    this.app.use(passport.initialize())
   }
 
   public async start() {
