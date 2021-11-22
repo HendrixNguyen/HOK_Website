@@ -2,7 +2,6 @@ import {
   BaseEntity,
   CreateDateColumn,
   Entity,
-  JoinTable,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
@@ -15,27 +14,26 @@ export class Session extends BaseEntity {
   id: string
 
   @ManyToOne(() => User, (user) => user.id, { eager: true })
-  @JoinTable()
   user: User
 
   @CreateDateColumn()
   createAt: Date
 
   public static async generateSessionForUser(user: User) {
-    return this.create({ user }).save();
+    return this.create({ user }).save()
   }
 
   public static async getUserFromSessionId(sessionId: string) {
-    const result = await this.findOne(sessionId);
-    console.log(result);
-    return this.findOne(sessionId).then(session => session?.user);
+    const result = await this.findOne(sessionId)
+    console.log(result)
+    return this.findOne(sessionId).then((session) => session?.user)
   }
 
   public static async getUserFromRequest(request: Request) {
-    const token = request.headers['x-token']?.toString();
+    const token = request.headers['x-token']?.toString()
     if (token) {
-      return this.getUserFromSessionId(token);
+      return this.getUserFromSessionId(token)
     }
-    return null;
+    return null
   }
 }
