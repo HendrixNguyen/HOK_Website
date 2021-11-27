@@ -1,4 +1,6 @@
 import * as React from "react";
+import Axios from "axios";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -38,10 +40,20 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    Axios.post("https://localhost:8080/login", {
+      username: data.get("username"),
       password: data.get("password"),
-    });
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((er) => {
+        console.error(er);
+      });
   };
 
   return (

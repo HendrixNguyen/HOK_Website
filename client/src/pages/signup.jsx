@@ -1,4 +1,6 @@
 import * as React from "react";
+import Axios from "axios";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -34,15 +36,35 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const checkPassword = (event) => {
+    event.preventDefault();
+
+    const pass1 = new FormData(event.currentTarget.password);
+    const pass2 = new FormData(event.currentTarget.repassword);
+
+    if (pass1 === pass2) {
+      console.log('password correct ')
+    } else {
+      console.alert("Repeated password is incorrect")
+    }
+  },
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    Axios.post("https://localhost:8080/register", {
+      username: data.get("username"),
+      // gender: data.get("gender")
+      fullName: data.get("firstName") + data.get("lastName"),
       email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+      password: data.get("password")
+    }).then(response => {console.log(response)}).catch(er => {console.error(er)});
+  },
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,6 +91,36 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Typography component="h3" variant="h4">
+                  Gender
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControlLabel
+                  name="gender"
+                  control={<Checkbox />}
+                  label="Male"
+                  labelPlacement="end"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControlLabel
+                  name="gender"
+                  control={<Checkbox />}
+                  label="Female"
+                  labelPlacement="end"
+                />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -112,12 +164,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                <TextField required fullWidth name="repassword" label="Re-password" type="password" id="repassword"/>
               </Grid>
             </Grid>
             <Button
