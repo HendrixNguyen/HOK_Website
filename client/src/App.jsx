@@ -11,6 +11,9 @@ function App() {
         <Switch>
           <Route exact path="/login" component={login} />
           <Route path="/signup" component={signup} />
+          <Route path="/" exact component={goToRoomInput} />
+          <Route path="/:roomId" exact component={Video} />
+          {/* <Redirect path="/login" to="/:roomId" exact component={video} /> */}
         </Switch>
       </Router>
     </div>
