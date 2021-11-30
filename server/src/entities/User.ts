@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -37,14 +38,15 @@ export class User extends BaseEntity {
   updateAt: Date
 
   @ManyToMany(() => Inbox, (inbox) => inbox.users)
+  @JoinTable()
   inboxes: Inbox[]
 
   public checkPassword(password: string): boolean {
-    return this.password == createHash('sha1').update(password).digest('hex');
+    return this.password == createHash('sha1').update(password).digest('hex')
   }
 
   public setPassword(password: string): this {
-    this.password = createHash('sha1').update(password).digest('hex');
+    this.password = createHash('sha1').update(password).digest('hex')
     return this
   }
 }
