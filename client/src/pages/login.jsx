@@ -1,5 +1,5 @@
 import * as React from "react";
-import Axios from "axios";
+import axios from "axios";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -44,10 +44,11 @@ export default function Login() {
     //   email: data.get("email"),
     //   password: data.get("password"),
     // });
-    Axios.post("https://localhost:3000/login", {
-      username: data.get("username"),
-      password: data.get("password"),
-    })
+    axios
+      .post("https://localhost:3000/login", {
+        username: data.get("username"),
+        password: data.get("password"),
+      })
       .then((response) => {
         console.log(response);
       })
