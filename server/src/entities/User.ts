@@ -40,6 +40,7 @@ export class User extends BaseEntity {
   @ManyToMany(() => Inbox, (inbox) => inbox.users)
   @JoinTable()
   inboxes: Inbox[]
+  messages: any
 
   public checkPassword(password: string): boolean {
     return this.password == createHash('sha1').update(password).digest('hex')

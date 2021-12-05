@@ -39,9 +39,21 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.value);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
 
-    axios.post(`http://localhost:3000/register`, { data }).then((res) => {
+    const user = {
+      username: data.get("username"),
+      email: data.get("email"),
+      fullname: data.get("firstName") + " " + data.get("lastName"),
+      password: data.get("password"),
+    };
+
+    console.log(user);
+
+    axios.post(`http://localhost:3000/register`, { user }).then((res) => {
       console.log(res.data);
     });
   };
