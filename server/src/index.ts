@@ -3,6 +3,7 @@ import express, { Application } from 'express'
 import morgan from 'morgan'
 import dbConnection from './config/dbconfig'
 import { MigrateManager } from './migrates'
+import cors from 'cors'
 
 export class Server {
   private app: Application
@@ -21,6 +22,7 @@ export class Server {
     this.app.set('port', process.env.PORT || 3000)
     this.app.use(express.json())
     this.app.use(morgan('dev'))
+    this.app.use(cors())
   }
 
   public async init() {

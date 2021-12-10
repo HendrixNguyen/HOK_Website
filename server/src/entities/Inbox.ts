@@ -9,7 +9,7 @@ export class Inbox extends BaseEntity {
   @ManyToMany(() => User, (user) => user.inboxes)
   users: User[]
 
-  public getMessages(user: User) {
-    return this.users.map((user) => user.messages)
-  }
+  // public getMessages(user: User) {
+  //   return this.users.map((user) => user.messages)
+  // }
 }

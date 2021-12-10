@@ -1,19 +1,34 @@
 import * as React from "react";
 import axios from "axios";
 
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Grid,
+  Avatar,
+  Button,
+  CssBaseline,
+  Checkbox,
+  TextField,
+  FormControlLabel,
+  Link,
+  Box,
+  Typography,
+  Container,
+} from "@material-ui/core";
+import { LockOutlined } from "@material-ui/icons";
+// import Avatar from "@mui/material/Avatar";
+// import Button from "@mui/material/Button";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import TextField from "@mui/material/TextField";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Link from "@mui/material/Link";
+// import Grid from "@mui/material/Grid";
+// import Box from "@mui/material/Box";
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import Typography from "@mui/material/Typography";
+// import Container from "@mui/material/Container";
+// import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,17 +51,20 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
+  const history = useHistory();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     axios
-      .post("https://localhost:3000/login", {
+      .post("http://localhost:3000/auth/login", {
         username: data.get("username"),
         password: data.get("password"),
       })
       .then((response) => {
         console.log(response);
+        history.push("/");
       })
       .catch((er) => {
         console.error(er);
@@ -66,7 +84,7 @@ export default function Login() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <LockOutlined />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -81,10 +99,10 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField

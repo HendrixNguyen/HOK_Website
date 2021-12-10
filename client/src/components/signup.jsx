@@ -1,18 +1,21 @@
 import * as React from "react";
-import API from "../api/server";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
+
+import {
+  Grid,
+  Avatar,
+  Button,
+  CssBaseline,
+  Checkbox,
+  TextField,
+  FormControlLabel,
+  Link,
+  Box,
+  Typography,
+  Container,
+} from "@material-ui/core";
+import { LockOutlined } from "@material-ui/icons";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import axios from "axios";
 
 function Copyright(props) {
@@ -36,6 +39,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const history = useHistory();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -54,7 +59,8 @@ export default function SignUp() {
     console.log(user);
 
     axios.post(`http://localhost:3000/register`, { user }).then((res) => {
-      console.log(res.data);
+      console.log(res);
+      history.push("/auth/login");
     });
   };
 
@@ -71,7 +77,7 @@ export default function SignUp() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <LockOutlined />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up

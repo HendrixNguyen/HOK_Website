@@ -12,4 +12,4 @@ FROM nobidev/nginx-ssl
 
 RUN sudo rm /etc/nginx/snippets/http.d/90-redirect.conf
 
-COPY --from=0 /app/dist/ /app/
+COPY --from=0 /app/build/ /app/

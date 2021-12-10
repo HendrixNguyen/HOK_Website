@@ -1,6 +1,8 @@
 import { createConnection } from 'typeorm'
 import { dirname, join } from 'path'
+import * as dotenv from 'dotenv'
 
+dotenv.config()
 const dbConnection = async () => {
   try {
     const conn = await createConnection({
